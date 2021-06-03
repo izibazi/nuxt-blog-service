@@ -1,4 +1,8 @@
 export default {
+  server: {
+    port: 3001,
+  },
+  srcDir: 'blog-app',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nuxt-blog-service',
