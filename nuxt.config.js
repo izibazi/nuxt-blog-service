@@ -39,7 +39,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'https://nuxt-blog-service-38652-default-rtdb.firebaseio.com/',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
