@@ -15,9 +15,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Vue, Component } from 'nuxt-property-decorator'
 
-export default Vue.extend({
+@Component({})
+export default class IndexPage extends Vue {
   asyncData() {
     return {
       isCreateMode: false,
@@ -25,14 +26,16 @@ export default Vue.extend({
         id: '',
       },
     }
-  },
+  }
 
-  computed: {
-    buttonText() {
-      return this.$data.isCreateMode ? '作成' : '更新'
-    },
-  },
-})
+  isCreateMode!: string
+
+  formData!: Object
+
+  get buttonText(): string {
+    return this.isCreateMode ? '新規登録' : 'ログイン'
+  }
+}
 </script>
 
 <style lang="scss">
