@@ -1,5 +1,4 @@
-// @ts-ignore
-import { IUser } from '~/domain/user.ts'
+import { IUser } from '~/domain/user'
 
 interface IPost {
   title: string

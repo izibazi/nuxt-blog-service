@@ -11,8 +11,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-// @ts-ignore
-import { IPost } from '~/domain/post.ts'
+import { IPost } from '~/domain/user'
 
 @Component({})
 export default class PostsPage extends Vue {
