@@ -10,12 +10,13 @@
         div.form-content
           el-checkbox(v-model="isCreateMode") アカウントを作成する
         div.text-right
-          el-button(type="primary") {{ buttonText }}
+          el-button(type="primary" @click="click") {{ buttonText }}
 
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import { authStore } from '~/utils/store-accessor'
 
 @Component({})
 export default class IndexPage extends Vue {
@@ -34,6 +35,10 @@ export default class IndexPage extends Vue {
 
   get buttonText(): string {
     return this.isCreateMode ? '新規登録' : 'ログイン'
+  }
+
+  click() {
+    console.log(authStore)
   }
 }
 </script>

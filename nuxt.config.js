@@ -2,7 +2,7 @@ export default {
   server: {
     port: 3001,
   },
-  srcDir: 'blog-app',
+  srcDir: 'app-blog',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'nuxt-blog-service',
@@ -21,7 +21,7 @@ export default {
   css: ['~/assets/scss/common.scss', 'element-ui/lib/theme-chalk/index.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/element-ui'],
+  plugins: ['@/plugins/element-ui', '@/plugins/axios-accessor'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
