@@ -2,12 +2,15 @@
 
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
-import auth from '~/store/auth'
+import FirebaseUserRepository from '~/infrastructure/firebaseUserRepository'
+import Auth from '~/store/auth'
 
-let authStore: auth | undefined
+let authStore: Auth
 // アプリケーションに必要なStoreを初期化する
 function initializeStore(store: Store<any>): void {
-  authStore = getModule(auth, store)
+  authStore = getModule(Auth, store)
+  // TODO: Use DIContainer
+  authStore.userRepository = new FirebaseUserRepository()
 }
 
 export { initializeStore, authStore }

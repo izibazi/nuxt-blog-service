@@ -3,6 +3,10 @@
     el-card(style="flex: 1")
       div.clearfix(slot="header")
         span ログイン
+      div.errors(v-if="errors.length > 0")
+        ul
+          li(v-for="error in errors" :key="error")
+            span {{ error }}
       form
         div.form-content
           span ユーザーID
@@ -17,6 +21,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { authStore } from '~/utils/store-accessor'
+import { IUser } from '~/domain/user'
 
 @Component({})
 export default class IndexPage extends Vue {
@@ -29,16 +34,46 @@ export default class IndexPage extends Vue {
     }
   }
 
-  isCreateMode!: string
+  isCreateMode: boolean = false
 
-  formData!: Object
+  formData!: IUser
+
+  errors: string[] = []
 
   get buttonText(): string {
     return this.isCreateMode ? '新規登録' : 'ログイン'
   }
 
   click() {
-    console.log(authStore)
+    if (this.isCreateMode) {
+      this.register()
+    } else {
+      this.login()
+    }
+  }
+
+  async register() {
+    this.errors = []
+    await authStore.register(this.formData.id).catch((error) => {
+      this.errors.push(error.message)
+    })
+    this.movePostPage()
+  }
+
+  async login() {
+    this.errors = []
+    await authStore.login(this.formData.id).catch((error) => {
+      this.errors.push(error.message)
+    })
+    this.movePostPage()
+  }
+
+  movePostPage() {
+    console.log(authStore.user?.id)
+    if (authStore.user?.id) {
+      this.formData.id = authStore.user.id
+      this.$router.push('/posts')
+    }
   }
 }
 </script>
@@ -46,5 +81,11 @@ export default class IndexPage extends Vue {
 <style lang="scss">
 .form-content {
   margin: 16px 0;
+}
+
+.errors {
+  padding: 10px;
+  background: #eee;
+  border: 1px solid #ccc;
 }
 </style>

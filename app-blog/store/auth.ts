@@ -1,9 +1,10 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { IUser } from '~/domain/user'
-import { $axios } from '~/utils/api'
+import { IUserRepository } from '~/domain/iUserRepository'
 
-@Module({ stateFactory: true, name: 'auth' })
-export default class auth extends VuexModule {
+@Module({ stateFactory: true, name: 'auth', namespaced: true })
+export default class Auth extends VuexModule {
+  userRepository!: IUserRepository
   user: IUser | null = null
 
   get isLoggedIn(): boolean {
@@ -15,16 +16,22 @@ export default class auth extends VuexModule {
     this.user = user
   }
 
-  @Action({ rawError: true })
+  @Action({ commit: 'setUser', rawError: true })
   public async login(id: string) {
-    const data = await $axios.$get(`/users/${id}.json`)
-    if (!data.id) throw new Error('invalid user')
-    this.setUser(data)
+    if (id == null || id.length === 0)
+      throw new Error('Can not login.id is empty!')
+    const data = await this.userRepository.login(id)
+    if (!data?.id) throw new Error('invalid user')
+    return data
   }
 
-  @Action
+  @Action({ commit: 'setUser', rawError: true })
   public async register(id: string) {
-    await $axios.$patch('/users.json', { id })
-    await this.login(id)
+    if (id == null || id.length === 0)
+      throw new Error('Can not register.id is empty!')
+    await this.userRepository.create(id)
+    const data = await this.userRepository.login(id)
+    if (!data?.id) throw new Error('invalid user')
+    return data
   }
 }
