@@ -19,13 +19,20 @@
 </template>
 
 <script lang="ts">
+import { Context } from '@nuxt/types'
 import { Vue, Component } from 'nuxt-property-decorator'
+import Cookies from 'universal-cookie'
 import { authStore } from '~/utils/store-accessor'
 import { IUser } from '~/domain/user'
 
 @Component({})
 export default class IndexPage extends Vue {
-  asyncData() {
+  asyncData(context: Context) {
+    console.log('asyncData')
+    if (authStore.isLoggedIn) {
+      context.redirect('/posts')
+      return
+    }
     return {
       isCreateMode: false,
       formData: {
@@ -55,7 +62,7 @@ export default class IndexPage extends Vue {
   async register() {
     this.errors = []
     await authStore.register(this.formData.id).catch((error) => {
-      this.errors.push(error.message)
+      this.error(error.message)
     })
     this.movePostPage()
   }
@@ -63,7 +70,7 @@ export default class IndexPage extends Vue {
   async login() {
     this.errors = []
     await authStore.login(this.formData.id).catch((error) => {
-      this.errors.push(error.message)
+      this.error(error.message)
     })
     this.movePostPage()
   }
@@ -71,9 +78,16 @@ export default class IndexPage extends Vue {
   movePostPage() {
     console.log(authStore.user?.id)
     if (authStore.user?.id) {
-      this.formData.id = authStore.user.id
+      this.$notify.success('Thank you for use.')
+      const cookie = new Cookies()
+      cookie.set('user', { id: authStore.user.id, likes: authStore.user.likes })
       this.$router.push('/posts')
     }
+  }
+
+  error(message: string) {
+    this.$notify.error(message)
+    this.errors.push(message)
   }
 }
 </script>
