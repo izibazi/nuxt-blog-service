@@ -1,9 +1,7 @@
-import { IUser } from '~/domain/user'
-
-interface IPost {
+type IPost = {
   title: string
-  createdAt: string
-  user: IUser
+  body: string
+  createdAt: number
 }
 
 export { IPost }

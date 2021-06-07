@@ -18,10 +18,8 @@ export default class PostsPage extends Vue {
   posts: IPost[] = [
     {
       title: 'seita',
-      createdAt: '2021',
-      user: {
-        id: 'kanta',
-      },
+      body: '',
+      createdAt: new Date().getTime(),
     },
   ]
 }

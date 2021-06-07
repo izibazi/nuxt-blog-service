@@ -3,14 +3,17 @@
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 import FirebaseUserRepository from '~/infrastructure/firebaseUserRepository'
-import Auth from '~/store/auth'
+import AuthStore from '~/store/authStore'
+import PostStore from '~/store/postStore'
 
-let authStore: Auth
+let authStore: AuthStore
+let postStore: PostStore
 // アプリケーションに必要なStoreを初期化する
 function initializeStore(store: Store<any>): void {
-  authStore = getModule(Auth, store)
+  authStore = getModule(AuthStore, store)
   // TODO: Use DIContainer
   authStore.userRepository = new FirebaseUserRepository()
+  postStore = getModule(PostStore, store)
 }
 
-export { initializeStore, authStore }
+export { initializeStore, authStore, postStore }
