@@ -27,7 +27,7 @@ export default class PostNewPage extends Vue {
   formData: PostInput = new PostInput()
 
   async post() {
-    this.formData.userId = authStore.user?.id
+    this.formData.userId = authStore.user?.id ?? ''
     if (!this.formData.userId) {
       this.logout()
       return

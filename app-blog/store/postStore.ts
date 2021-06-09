@@ -16,10 +16,20 @@ export default class PostStore extends VuexModule {
     this.posts.push(post)
   }
 
+  @Action({ rawError: true, commit: 'setPosts' })
+  public async fetch() {
+    const data = await $axios.$get('/posts.json')
+    const posts = Object.entries(data)
+      .reverse()
+      .map(([id, content]) => {
+        return { id, ...(content as object) }
+      })
+    return posts
+  }
+
   @Action({ rawError: true, commit: 'addPost' })
   public async post(payload: { title: string; body: string; userId: string }) {
     const user = await $axios.$get(`/users/${payload.userId}.json`)
-    console.log(user.id)
     if (user == null || user.id == null) {
       throw new Error('not found user')
     }
