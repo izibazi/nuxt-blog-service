@@ -1,4 +1,4 @@
-type IPost = {
+type Post = {
   id: string
   title: string
   body: string
@@ -6,4 +6,4 @@ type IPost = {
   userId: string
 }
 
-export { IPost }
+export { Post }

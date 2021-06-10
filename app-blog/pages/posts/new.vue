@@ -32,7 +32,7 @@ export default class PostNewPage extends Vue {
       this.logout()
       return
     }
-    const post = await postStore.post(this.formData).catch((error) => {
+    const post = await postStore.create(this.formData).catch((error) => {
       this.$notify.error(error.message)
       if (error.message === 'not found user') {
         this.logout()

@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Context } from '@nuxt/types'
 import { Vue, Component } from 'nuxt-property-decorator'
-import { IPost } from '~/domain/post'
+import { Post } from '~/domain/post'
 import { postStore } from '~/utils/store-accessor'
 
 @Component({})
@@ -25,11 +25,11 @@ export default class PostsPage extends Vue {
     await postStore.fetch()
   }
 
-  get posts(): IPost[] {
+  get posts(): Post[] {
     return postStore.posts
   }
 
-  clickPost(post: IPost) {
+  clickPost(post: Post) {
     this.$router.push(`/posts/${post.id}`)
   }
 }

@@ -1,18 +1,24 @@
 import { VuexModule, Module, Action, Mutation } from 'vuex-module-decorators'
-import { IPost } from '~/domain/post'
+import { Post } from '~/domain/post'
 import { $axios } from '~/utils/api'
 
 @Module({ stateFactory: true, name: 'postStore', namespaced: true })
 export default class PostStore extends VuexModule {
-  posts: IPost[] = []
+  posts: Post[] = []
+
+  get post() {
+    return (id: string): Post | undefined => {
+      return this.posts.find((i) => i.id === id)
+    }
+  }
 
   @Mutation
-  setPosts(posts: IPost[]) {
+  setPosts(posts: Post[]) {
     this.posts = posts
   }
 
   @Mutation
-  addPost(post: IPost) {
+  addPost(post: Post) {
     this.posts.push(post)
   }
 
@@ -28,7 +34,19 @@ export default class PostStore extends VuexModule {
   }
 
   @Action({ rawError: true, commit: 'addPost' })
-  public async post(payload: { title: string; body: string; userId: string }) {
+  public async fetchPost(postId: string) {
+    if (this.post(postId)) return
+
+    const data = await $axios.$get(`/posts/${postId}.json`)
+    return { id: postId, ...data }
+  }
+
+  @Action({ rawError: true, commit: 'addPost' })
+  public async create(payload: {
+    title: string
+    body: string
+    userId: string
+  }) {
     const user = await $axios.$get(`/users/${payload.userId}.json`)
     if (user == null || user.id == null) {
       throw new Error('not found user')
