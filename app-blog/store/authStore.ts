@@ -1,18 +1,18 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
-import { IUser } from '~/domain/user'
+import { User } from '~/domain/user'
 import { IUserRepository } from '~/domain/iUserRepository'
 
 @Module({ stateFactory: true, name: 'authStore', namespaced: true })
 export default class AuthStore extends VuexModule {
   userRepository!: IUserRepository
-  user: IUser | null = null
+  user: User | null = null
 
   get isLoggedIn(): boolean {
     return this.user != null
   }
 
   @Mutation
-  setUser(user: IUser): void {
+  setUser(user: User): void {
     this.user = user
   }
 

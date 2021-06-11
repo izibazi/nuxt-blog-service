@@ -11,11 +11,11 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { authStore } from '~/utils/store-accessor'
-import { IUser } from '~/domain/user'
+import { User } from '~/domain/user'
 
 @Component({})
 export default class TheHeader extends Vue {
-  get user(): IUser | null {
+  get user(): User | null {
     return authStore.user
   }
 }

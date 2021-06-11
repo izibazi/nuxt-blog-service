@@ -1,8 +1,8 @@
-import { IUser } from '~/domain/user'
+import { User } from '~/domain/user'
 
 interface IUserRepository {
-  create(id: string): Promise<IUser>
-  login(id: string): Promise<IUser>
+  create(id: string): Promise<User>
+  login(id: string): Promise<User>
 }
 
 export { IUserRepository }

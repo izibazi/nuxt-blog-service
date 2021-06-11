@@ -1,6 +1,6 @@
-interface IUser {
+interface User {
   id: string
   likes: number
 }
 
-export { IUser }
+export { User }

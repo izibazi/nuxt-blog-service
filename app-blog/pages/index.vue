@@ -23,12 +23,11 @@ import { Context } from '@nuxt/types'
 import { Vue, Component } from 'nuxt-property-decorator'
 import Cookies from 'universal-cookie'
 import { authStore } from '~/utils/store-accessor'
-import { IUser } from '~/domain/user'
+import { User } from '~/domain/user'
 
 @Component({})
 export default class IndexPage extends Vue {
   asyncData(context: Context) {
-    console.log('asyncData')
     if (authStore.isLoggedIn) {
       context.redirect('/posts')
       return
@@ -43,7 +42,7 @@ export default class IndexPage extends Vue {
 
   isCreateMode: boolean = false
 
-  formData!: IUser
+  formData!: User
 
   errors: string[] = []
 
