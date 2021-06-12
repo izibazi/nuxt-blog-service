@@ -1,6 +1,7 @@
-interface User {
+import { Like } from '~/domain/like'
+type User = {
   id: string
-  likes: number
+  likes: Like[]
 }
 
 export { User }

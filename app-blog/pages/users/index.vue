@@ -5,7 +5,10 @@
         el-table(:data="users")
           el-table-column(prop="id" label="ユーザー名")
           el-table-column(label="post数")
-            template(slot-scope="scope") {{ scope.row.posts.length }}
+            template(slot-scope="scope")
+              div(v-if="scope.row.posts") {{ scope.row.posts.length }}
+              div(v-else) No posts
+
           el-table-column(label="link")
             template(slot-scope="scope")
               el-button(@click="clickUser(scope.row)") 詳細
@@ -21,7 +24,6 @@ import { User } from '~/domain/user'
 @Component({})
 export default class UsersPage extends Vue {
   async fetch() {
-    // if (userStore.users.length > 0) return
     await userStore.fetchUsers()
   }
 

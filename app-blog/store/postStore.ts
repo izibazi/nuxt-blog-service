@@ -1,5 +1,6 @@
 import { VuexModule, Module, Action, Mutation } from 'vuex-module-decorators'
 import { Post } from '~/domain/post'
+import { Like } from '~/domain/like'
 import { $axios } from '~/utils/api'
 
 @Module({ stateFactory: true, name: 'postStore', namespaced: true })
@@ -53,7 +54,8 @@ export default class PostStore extends VuexModule {
     }
     const result = await $axios.$post('/posts.json', payload)
     const createdAt = new Date().getTime()
-    const post = { id: result.name, ...payload, createdAt }
+    const likes: Like[] = []
+    const post = { id: result.name, ...payload, createdAt, likes }
     const putData = {
       id: result.name,
       body: payload.body,
