@@ -21,6 +21,30 @@ Nuxt.jsビギナーズガイドのCHAPTER04の学習
 - UIテストも取り入れたい。
 - 公開サーバのデプロイの自動化を行う。
 
+# テスト
+
+参考ページ [Nuxt.js vuex-module-decoratorsで書かれたストアをJestを使ってテストする]
+https://qiita.com/azukiazusa/items/8a158913c870bc0c8ba9
+
+## 導入
+```
+$ yarn add -D @types/jest
+```
+
+```
+tsconfig.json
+types; [
+ ...
+ "@types/jest"
+]
+```
+
+## Store
+- ActionとGetterのテストを書く。State,Mutationはこれらが成功すれば保証されるので書かない。StateやMutationはprivateで実装しよう。
+- 
+
+$$$
+
 ## Build Setup
 
 ```bash
