@@ -19,17 +19,24 @@
     "paths": {
       "~/*": [
         "./app-blog/*",
-        "./*",
+        "./*"
       ],
       "@/*": [
         "./app-blog/*",
-        "./*",
+        "./*"
+      ],
+      "~~/*": [
+        "./*"
+      ],
+      "@@/*": [
+        "./*"
       ]
     },
     "types": [
       "@nuxt/types",
       "@nuxtjs/axios",
-      "@types/node"
+      "@types/node",
+      "@types/jest"
     ]
   },
   "exclude": [

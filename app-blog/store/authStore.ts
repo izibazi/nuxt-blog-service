@@ -8,6 +8,7 @@ import { $axios } from '~/utils/api'
 @Module({ stateFactory: true, name: 'authStore', namespaced: true })
 export default class AuthStore extends VuexModule {
   userRepository!: IUserRepository
+
   user: User | null = null
 
   get isLoggedIn(): boolean {
@@ -23,9 +24,7 @@ export default class AuthStore extends VuexModule {
   }
 
   @Mutation
-  setUser(user: User): void {
-    console.log('setUser')
-    console.log(user.likes)
+  private setUser(user: User): void {
     this.user = user ? Object.assign({ likes: [] }, user) : null
   }
 
@@ -33,17 +32,17 @@ export default class AuthStore extends VuexModule {
   public async login(id: string) {
     if (id == null || id.length === 0)
       throw new Error('Can not login.id is empty!')
-    const data = await this.userRepository.login(id)
+    const { data } = await this.userRepository.login(id)
     if (!data?.id) throw new Error('invalid user')
     return data
   }
 
   @Action({ commit: 'setUser', rawError: true })
   public async register(id: string) {
-    if (id == null || id.length === 0)
-      throw new Error('Can not register.id is empty!')
+    id = id.trim()
+    if (id.length === 0) throw new Error('Can not register.id is empty!')
     await this.userRepository.create(id)
-    const data = await this.userRepository.login(id)
+    const { data } = await this.userRepository.login(id)
     if (!data?.id) throw new Error('invalid user')
     return data
   }
@@ -56,6 +55,7 @@ export default class AuthStore extends VuexModule {
       likedAt: new Date().getTime(),
       postId: payload.postId,
     })
+    // TODO: use IUserRepository
     const data = await $axios.$put(`/users/${clone!.id}.json`, clone)
     return data
   }
@@ -66,6 +66,7 @@ export default class AuthStore extends VuexModule {
     clone.likes = clone.likes.filter(
       (like: Like) => payload.postId !== like.postId
     )
+    // TODO: use IUserRepository
     const data = await $axios.$put(`/users/${clone.id}.json`, clone)
     return data
   }

@@ -28,10 +28,10 @@ import { User } from '~/domain/user'
 @Component({})
 export default class IndexPage extends Vue {
   asyncData(context: Context) {
-    if (authStore.isLoggedIn) {
-      context.redirect('/posts')
-      return
-    }
+    // if (authStore.isLoggedIn) {
+    //   context.redirect('/posts')
+    //   return
+    // }
     return {
       isCreateMode: false,
       formData: {
@@ -68,14 +68,17 @@ export default class IndexPage extends Vue {
 
   async login() {
     this.errors = []
-    await authStore.login(this.formData.id).catch((error) => {
-      this.error(error.message)
-    })
-    this.movePostPage()
+    await authStore
+      .login(this.formData.id)
+      .then((_) => {
+        this.movePostPage()
+      })
+      .catch((error) => {
+        this.error(error.message)
+      })
   }
 
   movePostPage() {
-    console.log(authStore.user?.id)
     if (authStore.user?.id) {
       this.$notify.success('Thank you for use.')
       const cookie = new Cookies()

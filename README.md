@@ -21,6 +21,19 @@ Nuxt.jsビギナーズガイドのCHAPTER04の学習
 - UIテストも取り入れたい。
 - 公開サーバのデプロイの自動化を行う。
 
+# DI
+vue-module-decoratorをしようした場合下記のページ参考にすると、
+Moduleには$depsプロパティは追加されない。
+https://tech.cydas.com/entry/nuxt-inject
+
+下記はtypes/dependencies.d.tsなどにdeclareファイルをおけば解決するはず
+```
+今の所 $deps に型情報を簡単に反映させるには as Dependencies が良いと思って使っちゃっています。
+```
+
+inversify-propsというpackageを使うと一般的なIDContainerの実装が可能な様子。
+https://medium.com/@fernalvarez/dependency-injection-made-easy-for-vuejs-and-vuex-with-typescript-3bc738c17e05
+
 # テスト
 
 参考ページ [Nuxt.js vuex-module-decoratorsで書かれたストアをJestを使ってテストする]
