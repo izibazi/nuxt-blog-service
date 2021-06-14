@@ -55,8 +55,7 @@ export default class AuthStore extends VuexModule {
       likedAt: new Date().getTime(),
       postId: payload.postId,
     })
-    // TODO: use IUserRepository
-    const data = await $axios.$put(`/users/${clone!.id}.json`, clone)
+    const { data } = await this.userRepository.edit(clone)
     return data
   }
 
@@ -66,8 +65,7 @@ export default class AuthStore extends VuexModule {
     clone.likes = clone.likes.filter(
       (like: Like) => payload.postId !== like.postId
     )
-    // TODO: use IUserRepository
-    const data = await $axios.$put(`/users/${clone.id}.json`, clone)
+    const { data } = await this.userRepository.edit(clone)
     return data
   }
 }

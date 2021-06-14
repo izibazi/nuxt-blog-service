@@ -13,4 +13,8 @@ export default class FirebaseUserRepository implements IUserRepository {
   login(id: string): Promise<AxiosResponse<User>> {
     return $axios.get<User>(`/users/${id}.json`)
   }
+
+  edit(user: User): Promise<AxiosResponse<User>> {
+    return $axios.put(`/users/${user!.id}.json`, user)
+  }
 }
