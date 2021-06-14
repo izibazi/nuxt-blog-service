@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TheHeader スナップショット 1`] = `
+<div>
+  <transition-stub
+    mode="out-in"
+  >
+    <ul
+      class="el-menu--horizontal el-menu"
+      role="menubar"
+      tabindex="0"
+    >
+      <li
+        class="el-menu-item"
+        role="menuitem"
+        style="border-bottom-color: transparent;"
+        tabindex="-1"
+      >
+        <h1>
+          Nuxt Diary App
+        </h1>
+      </li>
+      <li
+        class="el-menu-item"
+        role="menuitem"
+        style="border-bottom-color: transparent;"
+        tabindex="-1"
+      >
+        投稿
+      </li>
+      <li
+        class="el-menu-item"
+        role="menuitem"
+        style="border-bottom-color: transparent; float: right;"
+        tabindex="-1"
+      >
+        ログイン
+      </li>
+      <li
+        class="el-menu-item"
+        role="menuitem"
+        style="border-bottom-color: transparent; float: right;"
+        tabindex="-1"
+      >
+        新規投稿
+      </li>
+    </ul>
+  </transition-stub>
+</div>
+`;

@@ -24,7 +24,7 @@ export default class AuthStore extends VuexModule {
   }
 
   @Mutation
-  private setUser(user: User): void {
+  setUser(user: User): void {
     this.user = user ? Object.assign({ likes: [] }, user) : null
   }
 
